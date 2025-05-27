@@ -1,0 +1,19 @@
+
+
+#logoEmpresa {
+    height: 40px;
+}
+
+body {
+padding-top: 70px; /* espaço para a navbar fixa */
+}
+
+.negrito{
+    font-weight: bold;
+}
+
+.desabilitaClique{
+    background-color: #dcdbdb !important;
+  pointer-events: none;
+}
+
