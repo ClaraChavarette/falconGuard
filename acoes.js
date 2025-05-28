@@ -4,18 +4,21 @@ document.getElementById('btnSobreNos').addEventListener('click', function() {
   document.getElementById("sobreNos").hidden = false;
   document.getElementById("login").hidden = true;
   document.getElementById("cadastrar").hidden = true;
+  document.getElementById("localizacao").hidden = true;
 });
 
 document.getElementById('btnLogin').addEventListener('click', function() {
   document.getElementById("login").hidden = false;
   document.getElementById("sobreNos").hidden = true;
   document.getElementById("cadastrar").hidden = true;
+  document.getElementById("localizacao").hidden = true;
 });
 
 document.getElementById('btnCadastrar').addEventListener('click', function() {
   document.getElementById("cadastrar").hidden = false;
   document.getElementById("sobreNos").hidden = true;
   document.getElementById("login").hidden = true;
+  document.getElementById("localizacao").hidden = true;
 
   var numAleatório =  Math.floor(Math.random() * 9000) + 1000; //gera um numero aleatorio de 4 digitos
   document.getElementById("codGerado").value= numAleatório;
@@ -33,6 +36,8 @@ document.getElementById('btnEnviarCadastro').addEventListener('click', function(
   var emailCadastro = document.getElementById("emailCadastro").value; 
   var codGerado = document.getElementById("codGerado").value; 
   var emailSeguranca = document.getElementById("emailSeguranca").value; 
+
+  document.getElementById("codUser").value = codGerado; 
 
   //cria objeto para enviar no ajax
 
@@ -96,6 +101,7 @@ document.getElementById('btnEnviarCadastro').addEventListener('click', function(
 document.getElementById('btnEntrar').addEventListener('click', function() {
   var nomeLgn = document.getElementById("nomeLgn").value; 
   var codLgn = document.getElementById("codLgn").value; 
+  document.getElementById("codUser").value = codLgn; 
 
   //cria objeto para enviar no ajax
   var dados = {
@@ -107,8 +113,7 @@ document.getElementById('btnEntrar').addEventListener('click', function() {
   $.ajax({ //ajax 
     type: "POST", //post busca e envia dados
     url: "http://localhost/falconGuardeBackEnd/falconGuard.php", //para onde vai os dados
-    data: dados, // envia o objeto criado antes
-    contentType: "application/json; charset=utf-8", // importante para CORS 
+    data: dados, // envia o objeto criado antes 
     dataType: "json", // força o jQuery a tratar como JSON
     success: function (resposta) { 		  
       console.log("Resposta do PHP:", resposta);
@@ -124,7 +129,6 @@ document.getElementById('btnEntrar').addEventListener('click', function() {
           pedirLocalizacao();
 
           setTimeout(function () {
-            limparPagina();
             document.getElementById("localizacao").hidden = false;
             document.getElementById("login").hidden = true;
           }, 3000); // Ajusta o tempo (3000 ms = 3seg ) 
@@ -171,6 +175,10 @@ function pedirLocalizacao() {
       function (position) {
         var latitude = position.coords.latitude;
         var longitude = position.coords.longitude;
+
+        document.getElementById("latitude").value = latitude; 
+        document.getElementById("longitude").value = longitude;  
+
         console.log("Latitude:", latitude);
         console.log("Longitude:", longitude); 
 
@@ -197,5 +205,52 @@ function pedirLocalizacao() {
 }
 
 
+document.getElementById('btnEnviarEmail').addEventListener('click', function() {
+    var lat = document.getElementById("latitude").value; 
+    var long = document.getElementById("longitude").value; 
+    var codUser = document.getElementById("codUser").value; 
+
+    //cria objeto para enviar no ajax
+    var dados = {
+        acao: "enviarEmail",
+        latitude: lat,
+        longitude: long,
+        codUser: codUser
+    };
+
+    $.ajax({ //ajax 
+    type: "POST", //post busca e envia dados
+    url: "http://localhost/falconGuardeBackEnd/falconGuard.php", //para onde vai os dados
+    data: dados, // envia o objeto criado antes 
+    dataType: "json", // força o jQuery a tratar como JSON
+    success: function (resposta) { 		  
+      console.log("Resposta do PHP:", resposta);
+
+      if (resposta.status === "sucesso") {
+
+        console.log(resposta.mensagem);
+        
+        $("#labelMsgLgn").addClass("text-success negrito");// rounded deixa arredondado e p-1 add  espaçamento interno
+        document.getElementById("labelMsgLgn").textContent = "Email enviado"; //insere mensagem na label 
 
 
+      } else {
+      console.log("Erro ao registrar:", respostaAtualizada.mensagem || "sem detalhes");
+      alert("Deu erro! Verifique todos os dados.");
+      //document.getElementById("labelMen").textContent = "Deu erro! Verifique todos os dados."; //insere mensagem na label
+      }
+                  
+    },
+    error: function (xhr, textStatus, errorThrown) {
+      console.log("Erro:", textStatus, errorThrown);
+      alert("Deu erro: " + textStatus);
+      //document.getElementById("labelMens").textContent = "Erro: "+textStatus; //insere mensagem na label
+    }
+  }); //ajax 
+
+});
+
+
+
+
+        
