@@ -74,6 +74,7 @@ document.getElementById('btnEnviarCadastro').addEventListener('click', function(
           }, 3000); // Ajusta o tempo (3000 ms = 3seg ) 
 
         }else{
+            
           console.log("Registrado com sucesso"); 
           $("#labelMsgCadastro").addClass("text-success negrito"); // rounded deixa arredondado e p-1 add  espaçamento interno
           document.getElementById("labelMsgCadastro").textContent = "Usuário registrado com sucesso."; //insere mensagem na label 
