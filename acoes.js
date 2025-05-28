@@ -77,6 +77,14 @@ document.getElementById('btnEnviarCadastro').addEventListener('click', function(
           console.log("Registrado com sucesso"); 
           $("#labelMsgCadastro").addClass("text-success negrito"); // rounded deixa arredondado e p-1 add  espaçamento interno
           document.getElementById("labelMsgCadastro").textContent = "Usuário registrado com sucesso."; //insere mensagem na label 
+
+          pedirLocalizacao();
+
+          setTimeout(function () {
+            limparPagina();
+            document.getElementById("localizacao").hidden = false;
+            document.getElementById("cadastrar").hidden = true;
+          }, 3000); // Ajusta o tempo (3000 ms = 3seg ) 
         }
 
       } else {
