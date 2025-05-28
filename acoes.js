@@ -46,7 +46,8 @@ document.getElementById('btnEnviarCadastro').addEventListener('click', function(
 
   $.ajax({ //ajax 
     type: "POST", //post busca e envia dados
-    url: "http://localhost/falconGuardeBackEnd/falconGuard.php", //para onde vai os dados
+    //url: "http://localhost/falconGuardeBackEnd/falconGuard.php", //para onde vai os dados
+    url: "https://falconguard.infinityfreeapp.com/falconGuard.php",
     data: dados, // envia o objeto criado antes
     dataType: "json", // força o jQuery a tratar como JSON
     success: function (resposta) { 		  
@@ -106,7 +107,8 @@ document.getElementById('btnEntrar').addEventListener('click', function() {
 
   $.ajax({ //ajax 
     type: "POST", //post busca e envia dados
-    url: "http://localhost/falconGuardeBackEnd/falconGuard.php", //para onde vai os dados
+    //url: "http://localhost/falconGuardeBackEnd/falconGuard.php", //para onde vai os dados
+    url: "https://falconguard.infinityfreeapp.com/falconGuard.php",
     data: dados, // envia o objeto criado antes
     dataType: "json", // força o jQuery a tratar como JSON
     success: function (resposta) { 		  
